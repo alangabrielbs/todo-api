@@ -2,7 +2,7 @@ import { Knex } from "knex";
 
 declare module "knex/types/tables" {
   export interface Tables {
-    task: {
+    tasks: {
       id: string;
       title: string;
       description: string;
