@@ -24,6 +24,10 @@ export const getTask = async (req: Request, res: Response) => {
     })
     .first();
 
+  if (task) {
+    task.done = !!task.done;
+  }
+
   res.json({
     task,
   });
