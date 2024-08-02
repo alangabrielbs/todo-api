@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/http/server.ts",
     "knex": "node --import tsx ./node_modules/.bin/knex",
+    "knex:migrate": "yarn knex migrate:latest",
     "test": "vitest"
   },
   "dependencies": {
