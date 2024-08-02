@@ -9,12 +9,24 @@ import { CreateTaskParams } from "./types";
 const handle = async (req: Request, res: Response, data: CreateTaskParams) => {
   const { title, description, done, duration } = data;
 
+  let sessionId = req.cookies.sessionId;
+
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+
+    res.cookie("sessionId", sessionId, {
+      path: "/",
+      maxAge: 1000 * 60 * 60 * 24 * 15, // 15 days
+    });
+  }
+
   await knex("tasks").insert({
     id: crypto.randomUUID(),
     title,
     description,
     done: Boolean(done),
     duration,
+    session_id: sessionId,
   });
 
   res.status(201).send();

@@ -10,6 +10,7 @@ declare module "knex/types/tables" {
       duration: number;
       created_at: Date;
       updated_at: Date;
+      session_id?: string;
     };
   }
 }

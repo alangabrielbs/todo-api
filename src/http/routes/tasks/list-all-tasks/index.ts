@@ -3,12 +3,20 @@ import { Request, Response } from "express";
 import { knex } from "@/infra/database";
 
 export const getAllTasks = async (req: Request, res: Response) => {
-  const tasksResult = knex("tasks").select();
+  const sessionId = req.cookies.sessionId;
+
+  const tasksResult = knex("tasks").where("session_id", sessionId).select();
   const incompleteTasksResult = knex("tasks")
-    .where("done", false)
+    .where({
+      done: false,
+      session_id: sessionId,
+    })
     .count<[{ count: string }]>("* as count");
   const completeTasksResult = knex("tasks")
-    .where("done", true)
+    .where({
+      done: true,
+      session_id: sessionId,
+    })
     .count<[{ count: string }]>("* as count");
 
   const [tasks, incompleteTasks, completeTasks] = await Promise.all([
