@@ -16,6 +16,7 @@ const handle = async (req: Request, res: Response, data: CreateTaskParams) => {
 
     res.cookie("sessionId", sessionId, {
       sameSite: "none",
+      secure: true,
       path: "/",
       maxAge: 1000 * 60 * 60 * 24 * 15, // 15 days
     });
