@@ -5,12 +5,26 @@ import { knex } from "@/infra/database";
 export const getAllTasks = async (req: Request, res: Response) => {
   const sessionId = req.cookies.sessionId;
 
-  const tasksResult = knex("tasks").where("session_id", sessionId).select();
+  if (!sessionId) {
+    res.json({
+      completeTasks: 0,
+      incompleteTasks: 0,
+      tasks: [],
+    });
+
+    return;
+  }
+
+  const tasksResult = knex("tasks")
+    .where("session_id", sessionId)
+    .orderBy("created_at", "desc")
+    .select();
   const incompleteTasksResult = knex("tasks")
     .where({
       done: false,
       session_id: sessionId,
     })
+
     .count<[{ count: string }]>("* as count");
   const completeTasksResult = knex("tasks")
     .where({

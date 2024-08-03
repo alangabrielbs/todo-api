@@ -8,7 +8,12 @@ import { routes } from "./routes/routes";
 
 export const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:5173", "https://todo.alangabriel.dev"],
+  })
+);
 app.use(json());
 
 app.use(cookieParser());

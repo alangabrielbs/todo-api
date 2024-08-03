@@ -6,9 +6,6 @@ export const CreateTaskSchema = z.object({
       message: "Titúlo é obrigatório",
       required_error: "Titúlo é obrigatório",
     })
-    .min(3, {
-      message: "Titúlo deve ter no mínimo 3 caracteres",
-    })
     .max(80, {
       message: "Titúlo deve ter no máximo 80 caracteres",
     }),
